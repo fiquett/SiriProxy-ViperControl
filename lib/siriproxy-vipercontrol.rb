@@ -1,3 +1,6 @@
+require 'cora'
+require 'siri_objects'
+
 require 'json'
 
 class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
