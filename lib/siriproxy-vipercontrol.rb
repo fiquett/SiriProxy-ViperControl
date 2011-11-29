@@ -39,7 +39,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 			rescue Timeout::Error
   				say "Sorry, connection timed out"
 			end
-			if (self.status != nil)
+			if !(self.status.nil?)
 				if(self.status["Return"]["ResponseSummary"]["StatusCode"] == 0) #successful
 					say "Viper Connection Successful"
 					if(self.status["Return"]["Results"]["Device"]["Action"] == "arm")
