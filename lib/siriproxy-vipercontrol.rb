@@ -11,7 +11,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
     	self.url = config["url"]
   	end
   	
-	self.status = nil
+	status = nil
 	
   	#capture ViperControl status
   	listen_for(/Car.*start/i) { send_command_to_car("remote") }
@@ -34,21 +34,21 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 		Thread.new {
 			begin
   				Timeout::timeout(20) do
-   					self.status = JSON.parse(open(URI("#{self.url}?action=#{viper_command}")).read)
+   					status = JSON.parse(open(URI("#{self.url}?action=#{viper_command}")).read)
   				end
 			rescue Timeout::Error
   				say "Sorry, connection timed out"
 			end
-			if !(self.status.nil?)
-				if(self.status["Return"]["ResponseSummary"]["StatusCode"] == 0) #successful
+			if !(status.nil?)
+				if(status["Return"]["ResponseSummary"]["StatusCode"] == 0) #successful
 					say "Viper Connection Successful"
-					if(self.status["Return"]["Results"]["Device"]["Action"] == "arm")
+					if(status["Return"]["Results"]["Device"]["Action"] == "arm")
 						say "Vehicle security engaged!"
-					elsif(self.status["Return"]["Results"]["Device"]["Action"] == "disarm")
+					elsif(status["Return"]["Results"]["Device"]["Action"] == "disarm")
 						say "Vehicle security disabled!"
-					elsif(self.status["Return"]["Results"]["Device"]["Action"]  == "remote")
+					elsif(status["Return"]["Results"]["Device"]["Action"]  == "remote")
 						say "Vehicle ignition has been triggered"
-					elsif(self.status["Return"]["Results"]["Device"]["Action"]  == "trunk")
+					elsif(status["Return"]["Results"]["Device"]["Action"]  == "trunk")
 						say "Vehicle trunk has been opened"
 					end
 				else
