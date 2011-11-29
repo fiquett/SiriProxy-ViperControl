@@ -31,6 +31,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 		
 		Thread.new {
 			status = JSON.parse(open("http://#{self.host}/viper_control.php?action=#{viper_command}").read)
+			puts status
 			if status
 				say "Viper Connection Successful"
 				if(status["Return"]["ResponseSummary"]["StatusCode"] == 0) #successful
