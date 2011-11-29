@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.name        = "siriproxy-vipercontrol"
   s.version     = "0.0.1" 
   s.authors     = ["fiquett"]
-  s.email       = [""]
+  s.email       = ["brandon@fiquett.com"]
   s.homepage    = "http://fiquett.com"
   s.summary     = %q{Viper SmartStart Control Plugin}
   s.description = %q{This plugin accepts commands and send them to car via Viper SmartStart network}
