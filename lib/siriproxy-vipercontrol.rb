@@ -45,7 +45,6 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 				else
 					say "Sorry, could not connect to your vehicle."
 				end
-			end
 			
 			request_completed
 		}	
