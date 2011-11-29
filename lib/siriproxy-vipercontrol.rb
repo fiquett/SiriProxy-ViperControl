@@ -1,6 +1,7 @@
 require 'cora'
 require 'siri_objects'
 require 'json'
+require 'open-uri'
 
 class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
   	attr_accessor :url
@@ -28,7 +29,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
   	def send_command_to_car(viper_command)
 		say  "One moment while I connect to your vehicle..."
 		Thread.new {
-			status = JSON.parse(open("#{self.url}?action=#{viper_command}").read) rescue nil
+			status = JSON.parse(open(URI("#{self.url}?action=#{viper_command}")).read) rescue nil
 				if(status["Return"]["ResponseSummary"]["StatusCode"] == 0) #successful
 					say "Viper Connection Successful"
 					if(status["Return"]["Results"]["Device"]["Action"] == "arm")
