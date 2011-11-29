@@ -2,6 +2,7 @@ require 'cora'
 require 'siri_objects'
 require 'json'
 require 'open-uri'
+require 'timeout'
 
 class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
   	attr_accessor :url
