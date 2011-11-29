@@ -28,8 +28,8 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
   
   	def send_command_to_car(viper_command)
 		say  "One moment while I connect to your vehicle..."
-		puts "#{self.host}?action=#{viper_command}"
 		Thread.new {
+			say  "Initiating connection..."
 			status = JSON.parse(open("#{self.host}?action=#{viper_command}").read)
 				if(status["Return"]["ResponseSummary"]["StatusCode"] == 0) #successful
 					say "Viper Connection Successful"
