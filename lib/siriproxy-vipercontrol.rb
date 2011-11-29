@@ -31,7 +31,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 		
 		Thread.new {
 			say "http://#{self.host}/viper_control.php?action=#{viper_command}"
-			status = JSON.parse(open("http://#{self.host}/viper_control.php?action=#{viper_command}").read)
+			status = JSON.parse(open("#{self.host}?action=#{viper_command}").read)
 				if(status["Return"]["ResponseSummary"]["StatusCode"] == 0) #successful
 					say "Viper Connection Successful"
 					if(status["Return"]["Results"]["Device"]["Action"] == "arm")
