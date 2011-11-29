@@ -29,7 +29,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
   	def send_command_to_car(viper_command)
 		say  "One moment while I connect to your vehicle..."
 		Thread.new {
-			result = HTTParty.get("#{self.url}?action=#{viper_command}") rescue nil
+			result = HTTParty.get("#{self.url}?action=#{viper_command}").body rescue nil
 			puts "#{result}"
 			status = JSON.parse(result) rescue nil
 			say  "Connected..."
