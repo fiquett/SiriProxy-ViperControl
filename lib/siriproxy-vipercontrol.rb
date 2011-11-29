@@ -30,6 +30,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 		say  "One moment while I connect to your vehicle..."
 		
 		Thread.new {
+			puts "http://#{self.host}/viper_control.php?action=#{viper_command}"
 			status = JSON.parse(open("http://#{self.host}/viper_control.php?action=#{viper_command}").read)
 				if(status["Return"]["ResponseSummary"]["StatusCode"] == 0) #successful
 					say "Viper Connection Successful"
