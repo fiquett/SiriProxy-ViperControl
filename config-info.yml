@@ -6,4 +6,4 @@
     
     - name: 'ViperControl'
       git: 'git://github.com/fiquett/SiriProxy-ViperControl.git'
-      host: 'yourwebserver'
+      url: 'http://yourwebserver/viper_control.php'
