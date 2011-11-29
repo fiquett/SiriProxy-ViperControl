@@ -2,6 +2,7 @@ require 'cora'
 require 'siri_objects'
 require 'json'
 require 'open-uri'
+require 'timeout'
 
 class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
   	attr_accessor :url
@@ -10,6 +11,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
     	self.url = config["url"]
   	end
 
+	retries = 2
   	#capture ViperControl status
   	listen_for(/Car.*start/i) { send_command_to_car("remote") }
   	listen_for(/start.*Car/i) { send_command_to_car("remote") }
@@ -29,7 +31,18 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
   	def send_command_to_car(viper_command)
 		say  "One moment while I connect to your vehicle..."
 		Thread.new {
-			status = JSON.parse(open(URI("#{self.url}?action=#{viper_command}")).read) rescue nil
+			begin
+     				Timeout::timeout(8){
+					status = JSON.parse(open(URI("#{self.url}?action=#{viper_command}")).read)
+     				}
+   			rescue Timeout::Error
+     				retries -= 1
+     				if retry > 0
+       					sleep 0.42 and retry
+     				else
+       					raise
+     				end
+   			end
 				if(status["Return"]["ResponseSummary"]["StatusCode"] == 0) #successful
 					say "Viper Connection Successful"
 					if(status["Return"]["Results"]["Device"]["Action"] == "arm")
