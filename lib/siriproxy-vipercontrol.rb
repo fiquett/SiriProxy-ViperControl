@@ -38,8 +38,8 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
   				end
 			rescue Timeout::Error
   				say "Sorry, connection timed out"
+  				request_completed
 			end
-			if !(status.nil?)
 				if(status["Return"]["ResponseSummary"]["StatusCode"] == 0) #successful
 					say "Viper Connection Successful"
 					if(status["Return"]["Results"]["Device"]["Action"] == "arm")
@@ -54,7 +54,6 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 				else
 					say "Sorry, could not connect to your vehicle."
 				end
-			end
 			request_completed
 		}	
 	end
