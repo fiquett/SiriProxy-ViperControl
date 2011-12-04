@@ -17,11 +17,11 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
   	listen_for(/Car.*start/i) { send_command_to_car("remote") }
   	listen_for(/start.*Car/i) { send_command_to_car("remote") }
   
+    	listen_for(/Car.*unlock/i) { send_command_to_car("disarm") }
+  	listen_for(/unlock.*Car/i) { send_command_to_car("disarm") }
+  
   	listen_for(/Car.*lock/i) { send_command_to_car("arm") }
   	listen_for(/lock.*Car/i) { send_command_to_car("arm") }
-  
-  	listen_for(/Car.*unlock/i) { send_command_to_car("disarm") }
-  	listen_for(/unlock.*Car/i) { send_command_to_car("disarm") }
 
   	listen_for(/Car.*trunk/i) { send_command_to_car("trunk") }
   	listen_for(/trunk.*Car/i) { send_command_to_car("trunk") }
