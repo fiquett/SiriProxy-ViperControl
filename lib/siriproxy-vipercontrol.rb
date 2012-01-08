@@ -16,6 +16,9 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
   	#capture ViperControl status
   	listen_for(/Car.*start/i) { send_command_to_car("remote") }
   	listen_for(/start.*Car/i) { send_command_to_car("remote") }
+  	
+  	listen_for(/Car.*stop/i) { send_command_to_car("remote") }
+  	listen_for(/stop.*Car/i) { send_command_to_car("remote") }
   
     	listen_for(/Car.*unlock/i) { send_command_to_car("disarm") }
   	listen_for(/unlock.*Car/i) { send_command_to_car("disarm") }
