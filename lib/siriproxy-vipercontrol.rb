@@ -32,7 +32,8 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
  	listen_for(/Car.*panic/i) { send_command_to_car("panic") }
   	listen_for(/panic.*Car/i) { send_command_to_car("panic") }
   
-	listen_for(/find.*Car/i) { send_command_to_car("locate") }
+	listen_for(/locate.*Car/i) { send_command_to_car("locate") }
+	listen_for(/dude where's.*Car/i) { send_command_to_car("locate") }
 
   	def send_command_to_car(viper_command)
 		say  "One moment while I connect to your vehicle..."
@@ -76,7 +77,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
       						map_snippet = SiriMapItemSnippet.new
       						map_snippet.userCurrentLocation = false
       						map_snippet.items << map
-      						utterance = SiriAssistantUtteranceView.new("You are here:","I have located your car near #{map.location.street}. Here's a map.")
+      						utterance = SiriAssistantUtteranceView.new("Found your Car!","It's located your car near #{map.location.street}.")
       						add_views.views << utterance
 						add_views.views << map_snippet
 						send_object add_views
