@@ -32,6 +32,9 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
  	listen_for(/Car.*panic/i) { send_command_to_car("panic") }
   	listen_for(/panic.*Car/i) { send_command_to_car("panic") }
   
+	listen_for(/locate.*Car/i) { send_command_to_car("locate") }
+	listen_for(/dude where's.*Car/i) { send_command_to_car("locate") }
+
   	def send_command_to_car(viper_command)
 		say  "One moment while I connect to your vehicle..."
 		Thread.new {
@@ -53,6 +56,31 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 						say "Vehicle ignition has been triggered"
 					elsif($status["Return"]["Results"]["Device"]["Action"]  == "trunk")
 						say "Vehicle trunk has been opened"
+					elsif($status["Return"]["Results"]["Device"]["Action"] == "locate")
+						address1 = $status["Return"]["Results"]["Device"]["Address"]
+						address2 = address1.split("\t")
+						map = SiriMapItem.new
+      						map.label = "Location of your Car"
+      						map.detailType = "ADDRESS_ITEM"
+     						map.location = SiriLocation.new
+      						map.location.street = address2[0]
+      						map.location.countryCode = ""
+      						map.location.city = ""
+      						map.location.stateCode = ""
+      						map.location.latitude = $status["Return"]["Results"]["Device"]["Latitude"] 
+      						map.location.longitude = $status["Return"]["Results"]["Device"]["Longitude"]
+      						map.location.postalCode = ""
+						add_views = SiriAddViews.new
+      						add_views.make_root(last_ref_id)
+      						add_views.scrollToTop = true
+      						add_views.dialogPhase = "Summary"
+      						map_snippet = SiriMapItemSnippet.new
+      						map_snippet.userCurrentLocation = false
+      						map_snippet.items << map
+      						utterance = SiriAssistantUtteranceView.new("Found your Car!","It's located near #{map.location.street}.")
+      						add_views.views << utterance
+						add_views.views << map_snippet
+						send_object add_views
 					end
 				else
 					say "Sorry, could not connect to your vehicle."
