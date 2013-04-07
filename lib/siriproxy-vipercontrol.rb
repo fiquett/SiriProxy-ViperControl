@@ -32,6 +32,8 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
  	listen_for(/Car.*panic/i) { send_command_to_car("panic") }
   	listen_for(/panic.*Car/i) { send_command_to_car("panic") }
   
+	listen_for(/locate.*Car/i) { send_command_to_car("locate") }
+
   	def send_command_to_car(viper_command)
 		say  "One moment while I connect to your vehicle..."
 		Thread.new {
@@ -53,6 +55,8 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 						say "Vehicle ignition has been triggered"
 					elsif($status["Return"]["Results"]["Device"]["Action"]  == "trunk")
 						say "Vehicle trunk has been opened"
+					else
+						say "Your car has been located"
 					end
 				else
 					say "Sorry, could not connect to your vehicle."
