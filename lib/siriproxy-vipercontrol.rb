@@ -56,12 +56,13 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 					elsif($status["Return"]["Results"]["Device"]["Action"]  == "trunk")
 						say "Vehicle trunk has been opened"
 					elsif($status["Return"]["Results"]["Device"]["Action"] == "locate")
-						address1 = $status("Return"]["Results"]["Device"]["Address"].split("\t")
+						address1 = $status("Return"]["Results"]["Device"]["Address"]
+						address2 = address1.split("\t")
 						map = SiriMapItem.new
       						map.label = "Location of your Car"
       						map.detailType = "ADDRESS_ITEM"
      						map.location = SiriLocation.new
-      						map.location.street = "address1[0]"
+      						map.location.street = "address2[0]"
       						map.location.countryCode = ""
       						map.location.city = ""
       						map.location.stateCode = ""
