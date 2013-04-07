@@ -32,7 +32,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
  	listen_for(/Car.*panic/i) { send_command_to_car("panic") }
   	listen_for(/panic.*Car/i) { send_command_to_car("panic") }
   
-	listen_for(/locate.*Car/i) { send_command_to_car("locate") }
+	listen_for(/find.*Car/i) { send_command_to_car("locate") }
 
   	def send_command_to_car(viper_command)
 		say  "One moment while I connect to your vehicle..."
