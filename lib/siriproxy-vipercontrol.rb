@@ -55,8 +55,29 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 						say "Vehicle ignition has been triggered"
 					elsif($status["Return"]["Results"]["Device"]["Action"]  == "trunk")
 						say "Vehicle trunk has been opened"
-					else
-						say "Your car has been located"
+					elsif($status["Return"]["Results"]["Device"]["Action"] == "locate")
+						map = SiriMapItem.new
+      						map.label = "Location of your Car"
+      						map.detailType = "ADDRESS_ITEM"
+     						map.location = SiriLocation.new
+      						map.location.street = ""
+      						map.location.countryCode = ""
+      						map.location.city = ""
+      						map.location.stateCode = ""
+      						map.location.latitude = $status["Return"]["Results"]["Device"]["Latitude"] 
+      						map.location.longitude = $status["Return"]["Results"]["Device"]["Longitude"]
+      						map.location.postalCode = ""
+						add_views = SiriAddViews.new
+      						add_views.make_root(last_ref_id)
+      						add_views.scrollToTop = true
+      						add_views.dialogPhase = "Summary"
+      						map_snippet = SiriMapItemSnippet.new
+      						map_snippet.userCurrentLocation = true
+      						map_snippet.items << map
+      						utterance = SiriAssistantUtteranceView.new("You are here:","I have located your car near #{map.location.street}. Here's a map.")
+      						add_views.views << utterance
+						add_views.views << map_snippet
+						send_object add_views
 					end
 				else
 					say "Sorry, could not connect to your vehicle."
