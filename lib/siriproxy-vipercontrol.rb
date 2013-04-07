@@ -62,7 +62,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
       						map.label = "Location of your Car"
       						map.detailType = "ADDRESS_ITEM"
      						map.location = SiriLocation.new
-      						map.location.street = "address2[0]"
+      						map.location.street = address2[0]
       						map.location.countryCode = ""
       						map.location.city = ""
       						map.location.stateCode = ""
