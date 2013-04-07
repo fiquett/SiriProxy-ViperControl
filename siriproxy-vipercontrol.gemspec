@@ -3,10 +3,10 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "siriproxy-vipercontrol"
-  s.version     = "0.0.1" 
-  s.authors     = ["fiquett"]
+  s.version     = "0.0.2" 
+  s.authors     = ["fiquett and Robert Hagedorn"]
   s.email       = ["brandon@fiquett.com"]
-  s.homepage    = "http://fiquett.com"
+  s.homepage    = "http://fiquett.com; http://pachysoftware.com"
   s.summary     = %q{Viper SmartStart Control Plugin}
   s.description = %q{This plugin accepts commands and send them to car via Viper SmartStart network}
 
