@@ -77,7 +77,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
       						map_snippet = SiriMapItemSnippet.new
       						map_snippet.userCurrentLocation = false
       						map_snippet.items << map
-      						utterance = SiriAssistantUtteranceView.new("Found your Car!","It's located your car near #{map.location.street}.")
+      						utterance = SiriAssistantUtteranceView.new("Found your Car!","It's located near #{map.location.street}.")
       						add_views.views << utterance
 						add_views.views << map_snippet
 						send_object add_views
