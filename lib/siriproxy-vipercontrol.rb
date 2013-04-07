@@ -56,11 +56,12 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
 					elsif($status["Return"]["Results"]["Device"]["Action"]  == "trunk")
 						say "Vehicle trunk has been opened"
 					elsif($status["Return"]["Results"]["Device"]["Action"] == "locate")
+						address1 = $status("Return"]["Results"]["Device"]["Address"].split("\t")
 						map = SiriMapItem.new
       						map.label = "Location of your Car"
       						map.detailType = "ADDRESS_ITEM"
      						map.location = SiriLocation.new
-      						map.location.street = ""
+      						map.location.street = "address1[0]"
       						map.location.countryCode = ""
       						map.location.city = ""
       						map.location.stateCode = ""
@@ -72,7 +73,7 @@ class SiriProxy::Plugin::ViperControl < SiriProxy::Plugin
       						add_views.scrollToTop = true
       						add_views.dialogPhase = "Summary"
       						map_snippet = SiriMapItemSnippet.new
-      						map_snippet.userCurrentLocation = true
+      						map_snippet.userCurrentLocation = false
       						map_snippet.items << map
       						utterance = SiriAssistantUtteranceView.new("You are here:","I have located your car near #{map.location.street}. Here's a map.")
       						add_views.views << utterance
